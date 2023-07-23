@@ -36,3 +36,4 @@ More Gamemodes to be added..
 2. Hide And Seek with Hot and Cold Functionality
 3. Capture the Flag
 	
+![Screenshot_2023-07-23_at_1 38 48_AM](https://github.com/gunner9001/HuntersAndHiders/assets/38230065/b02a4fc4-3ece-4fad-9e8c-7123a0e73226)
