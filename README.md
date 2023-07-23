@@ -16,3 +16,19 @@ More Gamemodes to be added..
 1. Install Unity and Github desktop <br />
 2. Clone this repository to a folder
 3. Open Unity and run from that designated folder
+
+
+
+## potential functionalities:
+
+	Lobby Create Scene:
+	- how many hunters would you like
+		- calculate if allplayers/2 <hunters = "exceeds the amount of hunters allowed"
+		
+		- would you like to chose the hunter or randomize it?
+			- Random:
+				use a randomizer for x amount of hunters
+			- chosing:
+				make a list that the owner can scroll to pick who the hunter will be 
+					once they select the person then the players name would turn gold or something 
+	
