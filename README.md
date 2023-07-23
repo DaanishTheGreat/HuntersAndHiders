@@ -31,4 +31,8 @@ More Gamemodes to be added..
 			- chosing:
 				make a list that the owner can scroll to pick who the hunter will be 
 					once they select the person then the players name would turn gold or something 
+## Possible Game Modes
+1. Classic Hide and Seek
+2. Hide And Seek with Hot and Cold Functionality
+3. Capture the Flag
 	
