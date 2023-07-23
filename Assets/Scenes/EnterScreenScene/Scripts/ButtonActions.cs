@@ -15,6 +15,6 @@ public class ButtonActions : MonoBehaviour
 	void CreateGameMoveToMainGame()
 	{
 		Debug.Log("Create Game Button Pressed");
-		SceneManager.LoadScene("MainGameScene");
+		SceneManager.LoadScene("CreateGameLobby");
 	}
 }
