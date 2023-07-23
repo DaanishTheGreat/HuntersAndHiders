@@ -10,3 +10,9 @@ Marko-Polo: <br />
 Seeker will be able to choose when to see hider location ever x minute interval and the circle will shrink as the game progresses <br />
 <br />
 More Gamemodes to be added..
+
+
+## Instructions to Access and Open this Project
+1. Install Unity and Github desktop <br />
+2. Clone this repository to a folder
+3. Open Unity and run from that designated folder
