@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ButtonActions : MonoBehaviour
 {
    public Button CreateGame;
+   //hellox2 - tahir
 
 	void Start () {
         CreateGame.GetComponent<Button>().onClick.AddListener(CreateGameMoveToMainGame);
