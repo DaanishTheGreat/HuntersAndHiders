@@ -8,12 +8,30 @@ using Unity.Services.Authentication;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
+using Unity.Netcode;
 
 public class CreateLobbyHandler : MonoBehaviour
 {
+    //Start UGS
+    async void Awake()
+	{
+		try
+		{
+			await UnityServices.InitializeAsync();
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+		}
+
+        Debug.Log("UGS started");
+
+        NetworkManager.Singleton.StartHost();
+	}
+
     // Connection Configuration
     const int MaxConnections = 12;
-    public string AccessCodeFromRelay;
+    private string AccessCodeFromRelay;
 
     async void AuthenticateHost()
     {
@@ -57,4 +75,6 @@ public class CreateLobbyHandler : MonoBehaviour
 
         return new RelayServerData(allocate, "dtls");
     }
+
+
 }

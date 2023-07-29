@@ -14,18 +14,6 @@ public class ButtonActions : MonoBehaviour
         CreateGame.GetComponent<Button>().onClick.AddListener(CreateGameMoveToMainGame);
 	}
 
-	async void Awake()
-	{
-		try
-		{
-			await UnityServices.InitializeAsync();
-		}
-		catch (Exception e)
-		{
-			Debug.LogException(e);
-		}
-	}
-
 	void CreateGameMoveToMainGame()
 	{
 		Debug.Log("Create Game Button Pressed");
