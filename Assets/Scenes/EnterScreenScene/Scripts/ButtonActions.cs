@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Services.Core;
+using System;
 
 public class ButtonActions : MonoBehaviour
 {
@@ -10,6 +12,18 @@ public class ButtonActions : MonoBehaviour
 
 	void Start () {
         CreateGame.GetComponent<Button>().onClick.AddListener(CreateGameMoveToMainGame);
+	}
+
+	async void Awake()
+	{
+		try
+		{
+			await UnityServices.InitializeAsync();
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+		}
 	}
 
 	void CreateGameMoveToMainGame()
