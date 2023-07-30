@@ -8,15 +8,13 @@ using System;
 
 public class ButtonActions : MonoBehaviour
 {
-   public Button CreateGame;
-
-	void Start () {
-        CreateGame.GetComponent<Button>().onClick.AddListener(CreateGameMoveToMainGame);
-	}
-
-	void CreateGameMoveToMainGame()
+	public void OnClickCreateGameMoveToMainGame()
 	{
-		Debug.Log("Create Game Button Pressed");
 		SceneManager.LoadScene("CreateGameLobby");
+	}
+	
+	public void OnClickJoinGameScene()
+	{
+		SceneManager.LoadScene("JoinGameScene");
 	}
 }
