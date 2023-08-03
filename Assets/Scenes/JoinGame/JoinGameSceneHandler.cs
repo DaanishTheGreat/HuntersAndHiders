@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-public class JoinGameSceneHandler : MonoBehaviour
+public class JoinGameSceneHandler : MonoBehaviour //MonoBehaviour
 {
     private string JoinCode;
     private string PlayerName = "empty";
+    //public GameObject PlayerClientPrefab;
     // Start is called before the first frame update
     void Start()
     {
-        
+        NetworkManager.Singleton.StartClient();
     }
 
     // Update is called once per frame
@@ -32,10 +34,24 @@ public class JoinGameSceneHandler : MonoBehaviour
 
     public void JoinGameOnClick()
     {
-        Debug.Log("Joining Game");
-        GameObject Player = GameObject.Find("PlayerClient");
+        GameObject EnterPlayerName = GameObject.Find("PlayerNameInputField");
+        GameObject Player = GameObject.Find("PlayerClient(Clone)");
+
+        GameObject[] PlayerClients = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
+
+        foreach(GameObject val in PlayerClients)
+        {
+            NetworkObject IsOwnerOrNot = val.GetComponent<NetworkObject>();
+            if(IsOwnerOrNot.IsOwner)
+            {
+                Player = val;
+            }
+        }
+
         PlayerInstanceScript PlayerInstance = Player.GetComponent<PlayerInstanceScript>();
-        PlayerInstance.UpdatePlayerName(PlayerName);
-        NetworkManager.Singleton.StartClient();
+        TMP_InputField EnterPlayerNameTextMesh = EnterPlayerName.GetComponent<TMP_InputField>();
+        PlayerInstance.SendPlayerNameToServerRpc(EnterPlayerNameTextMesh.text);
+        Debug.Log(EnterPlayerNameTextMesh.text);
+        //PlayerInstance.UpdatePlayerName(PlayerName);
     }
 }
