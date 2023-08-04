@@ -5,23 +5,20 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/EnterScreenScene/EnterScreen.unity
     guid: fcb8bf37469732b41a471b562eb2a9a4
   - enabled: 1
-    path: Assets/Scenes/LobbyScene/CreateGameLobby.unity
+    path: Assets/Scenes/LobbyScene/CreateGameLobbyFolder/CreateGameLobby.unity
     guid: 4b4edcd70a22ba2409a8d3cbc5446bd3
   - enabled: 1
-    path: Assets/Scenes/LobbyScene/CreateLobbyScene.unity
+    path: Assets/Scenes/LobbyScene/CreateLobbySceneFolder/CreateLobbyScene.unity
     guid: ca799f4f21aed73459bc46b45d4765c5
   - enabled: 1
     path: Assets/Scenes/MainGameScene.unity
     guid: 1c547ee3640c9164785af1843198fa68
   - enabled: 1
-    path: Assets/Scenes/JoinGame/JoinGameScene.unity
+    path: Assets/Scenes/JoinGame Scene/JoinGameScene.unity
     guid: bd089f9b7620bda45a21a744eeb80219
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 2e41c66e5ca7fef41ac63e4e8c4ecc8d, type: 2}
