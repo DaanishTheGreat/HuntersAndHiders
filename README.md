@@ -38,3 +38,11 @@ More Gamemodes to be added..
 
 ## Capture the Flag Flowchart
 ![Screenshot_2023-07-23_at_1 38 48_AM](https://github.com/gunner9001/HuntersAndHiders/assets/38230065/b02a4fc4-3ece-4fad-9e8c-7123a0e73226)
+
+## UI Design 
+![IMG_7956](https://github.com/gunner9001/HuntersAndHiders/assets/38230065/272b6f50-ba96-433c-a8ff-5949fe41b573)
+![IMG_7958](https://github.com/gunner9001/HuntersAndHiders/assets/38230065/bad949b9-740e-42e9-a1e2-1d53c2a581b5)
+
+## Backend Structure
+![IMG_3477](https://github.com/gunner9001/HuntersAndHiders/assets/38230065/ad7ce6d3-2f46-40e2-b959-d0c662ae6479)
+![IMG_3478](https://github.com/gunner9001/HuntersAndHiders/assets/38230065/9eef38d1-ba80-449b-aeb7-818f1c194c88)
