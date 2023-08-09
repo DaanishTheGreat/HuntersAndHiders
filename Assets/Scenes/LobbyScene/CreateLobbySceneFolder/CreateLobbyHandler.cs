@@ -37,7 +37,7 @@ public class CreateLobbyHandler : MonoBehaviour
         PlayerTextList.text = CreateGameLobbyHandler.PlayerName_InputField;
 	}
 
-    void Update()
+    void Update() //Change to on client connect server updates, sending RPC every frame is extremely inefficient
     {
         if(IsConnected == true)
         {

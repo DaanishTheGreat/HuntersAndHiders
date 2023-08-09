@@ -24,7 +24,7 @@ public class ClientConnectedHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() //Change to on client connect server updates, sending RPC every frame is extremely inefficient
     {
         if(IsConnected == true)
         {
