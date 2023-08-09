@@ -40,7 +40,7 @@ More Gamemodes to be added..
 ![Screenshot_2023-07-23_at_1 38 48_AM](https://github.com/gunner9001/HuntersAndHiders/blob/main/ProjectDocuments/CaptureTheFlagFlowchart.png)
 
 ## Backend Structure(Up-To-Date)
-[Backend Structure For Hunters and Hiders.pdf](https://github.com/gunner9001/HuntersAndHiders/blob/main/ProjectDocuments/BackendStructureForHuntersandHiders.pdf)
+![Backend Structure For Hunters and Hiders](https://github.com/gunner9001/HuntersAndHiders/blob/main/ProjectDocuments/BackendStructureForHuntersAndHidersPNGForGithub.png)
 
 ## UI Design 
 ![IMG_7956](https://github.com/gunner9001/HuntersAndHiders/blob/main/ProjectDocuments/UIFlowChart_Part1.png)
