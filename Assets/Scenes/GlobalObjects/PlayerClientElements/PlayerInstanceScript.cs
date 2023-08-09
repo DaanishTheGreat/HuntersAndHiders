@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using System.Linq;
 
 public class PlayerInstanceScript : NetworkBehaviour
 {
@@ -29,10 +30,24 @@ public class PlayerInstanceScript : NetworkBehaviour
         Debug.Log(PlayerName);
     }
 
-    public void LocalSendPlayerName(string PlayerName = "Empty")
+
+    //Start of Client Requested Player Name Data Rpc Bundle
+    [ServerRpc]
+    public void RequestPlayerNamesToServerRpc()
     {
-        PlayerNames.Add(PlayerName);
-        InstancePlayerName = PlayerName;
+        string PlayerNamesToString = "";
+        foreach(string PlayerName in PlayerNames)
+        {
+            PlayerNamesToString = PlayerNamesToString + ":" + PlayerName;
+        }
+        RespondWithPlayerNamesToClientRpc(PlayerNamesToString);
     }
+
+    [ClientRpc]
+    public void RespondWithPlayerNamesToClientRpc(string PlayerNames_Input)
+    {
+        PlayerNames = PlayerNames_Input.Split(":").ToList();
+    }
+    //End of Client Requested Player Name Data Rpc Bundle
 
 }
