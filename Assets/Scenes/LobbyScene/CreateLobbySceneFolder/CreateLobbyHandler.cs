@@ -15,31 +15,53 @@ public class CreateLobbyHandler : MonoBehaviour
 {
     //Start UGS
     public GameObject PlayerPrefab; 
-    async void Awake()
+
+    private bool IsConnected = false;
+    private bool PlayerNameUpdatedToServer = false;
+    async void Start()
 	{
 		try
 		{
 			await UnityServices.InitializeAsync();
             NetworkManager.Singleton.StartHost();
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 		}
 		catch (Exception e)
 		{
 			Debug.LogException(e);
+            Debug.Log("Some Error");
 		}
-
-        Debug.Log("UGS started");
+        
+        GameObject PlayerTextListGameObject = GameObject.Find("Players");
+        TextMeshProUGUI PlayerTextList = PlayerTextListGameObject.GetComponent<TextMeshProUGUI>();
+        PlayerTextList.text = CreateGameLobbyHandler.PlayerName_InputField;
 	}
+
+    void Update()
+    {
+        if(IsConnected == true)
+        {
+            GameObject PlayerTextListGameObject = GameObject.Find("Players");
+            TextMeshProUGUI PlayerTextList = PlayerTextListGameObject.GetComponent<TextMeshProUGUI>();
+
+            string PlayerListToString = "";
+            foreach(string val in PlayerInstanceScript.PlayerNames)
+            {
+                PlayerListToString = PlayerListToString + " " + val;
+            }
+            PlayerTextList.text = PlayerListToString;
+        }
+    }
 
     public void UpdateList()
     {
-        GameObject PlayerEnt = GameObject.Find("PlayerClient(Clone)");
+        GameObject PlayerEnt = GetHostPlayer();
         PlayerInstanceScript PlayerEntityInstanceScript = PlayerEnt.GetComponent<PlayerInstanceScript>();
-        PlayerEntityInstanceScript.LocalSendPlayerName("Daaaanish");
+        PlayerEntityInstanceScript.SendPlayerNameToServerRpc(CreateGameLobbyHandler.PlayerName_InputField);
 
         Debug.Log("Player Connected: " + PlayerInstanceScript.PlayerNames.ToString());
 
         GameObject PlayerTextListGameObject = GameObject.Find("Players");
-        //GameObject ListOfPlayerClientClones = GameObject.FindObjectsOfTypeAll()
         TextMeshProUGUI PlayerTextList = PlayerTextListGameObject.GetComponent<TextMeshProUGUI>();
 
         string PlayerListToString = "";
@@ -50,10 +72,42 @@ public class CreateLobbyHandler : MonoBehaviour
         PlayerTextList.text = PlayerListToString;
     }
 
-    public static void UpdatePlayerName()
+    private GameObject GetHostPlayer()
     {
+        GameObject PlayerHost = null;
+        GameObject[] PlayerClients = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
 
+        foreach(GameObject val in PlayerClients)
+        {
+            NetworkObject IsOwnerOrNot = val.GetComponent<NetworkObject>();
+            if(IsOwnerOrNot.IsOwner)
+            {
+                PlayerHost = val;
+            }
+        }
+        return PlayerHost;
     }
 
+    public void OnClientConnected(ulong ClientId)
+    {
+        if(PlayerNameUpdatedToServer == false)
+        {
+            GameObject PlayerHost = GetHostPlayer();
+            PlayerInstanceScript PlayerHostInstanceScript = PlayerHost.GetComponent<PlayerInstanceScript>();
+            PlayerHostInstanceScript.SendPlayerNameToServerRpc(CreateGameLobbyHandler.PlayerName_InputField);
+            PlayerNameUpdatedToServer = true;
+        }
+        GameObject PlayerTextListGameObject = GameObject.Find("Players");
+        TextMeshProUGUI PlayerTextList = PlayerTextListGameObject.GetComponent<TextMeshProUGUI>();
+
+        string PlayerListToString = "";
+        foreach(string val in PlayerInstanceScript.PlayerNames)
+        {
+            PlayerListToString = PlayerListToString + " " + val;
+        }
+        PlayerTextList.text = PlayerListToString;
+
+        IsConnected = true;
+    }
 
 }
