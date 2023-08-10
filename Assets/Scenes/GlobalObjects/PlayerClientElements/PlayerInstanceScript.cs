@@ -47,6 +47,7 @@ public class PlayerInstanceScript : NetworkBehaviour
     public void RespondWithPlayerNamesToClientRpc(string PlayerNames_Input)
     {
         PlayerNames = PlayerNames_Input.Split(":").ToList();
+        PlayerNames.RemoveAll(Element => Element == "");
     }
     //End of Client Requested Player Name Data Rpc Bundle
 
