@@ -11,6 +11,7 @@ using Unity.Services.Relay;
 using Unity.Netcode;
 using TMPro;
 using Unity.Netcode.Transports.UTP;
+using UnityEngine.SceneManagement;
 
 public class CreateLobbyHandler : MonoBehaviour
 {
@@ -72,9 +73,9 @@ public class CreateLobbyHandler : MonoBehaviour
         }
     }
 
-    public void UpdateList()
+    public void StartGameButton()
     {
-        
+        SceneManager.LoadScene("MainGameScene");
     }
 
     private GameObject GetHostPlayer()
