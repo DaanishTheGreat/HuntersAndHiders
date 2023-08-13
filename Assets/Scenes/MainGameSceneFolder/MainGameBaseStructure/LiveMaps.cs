@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class MapTestSceneHandler : MonoBehaviour
+public class LiveMaps : MonoBehaviour
 {
     public float zoomSpeed = 0.2f;
     public float maxZoom = 2.0f;
     public float minZoom = 1.0f;
     public float slideSpeed = 30.0f;
 
-     private Vector3 startingScale;
+    private Vector3 startingScale;
     private Vector3 zoomedScale;
 
     private Vector2 touchStartPos;

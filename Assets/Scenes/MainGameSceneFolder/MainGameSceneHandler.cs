@@ -46,7 +46,16 @@ public class MainGameSceneHandler : MonoBehaviour
          RawImage MapImageUiElement = MapImageGameObject.GetComponent<RawImage>();
          MapImageUiElement.texture = ((DownloadHandlerTexture) GetImageRequest.downloadHandler).texture;
        }
-
-       //WWW 
     }
 }
+
+
+/*
+Components to Implement: 
+
+PlayerLocation Services(and Handling Exceptions): PlayerLocation.cs
+
+DownloadMapImage Function family: Found in MainGameSceneHandler.cs with methods ObtainImageFromPlayerLocation() --> DownloadImageFromAPI()
+
+Display and Google Mapsify Images: MapTestSceneHandler.cs 
+*/
