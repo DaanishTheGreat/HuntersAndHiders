@@ -9,35 +9,33 @@ public class SpriteOnMap : MonoBehaviour
     public Sprite SpriteToSpawn;
     public Vector2 SpawnPosition;
 
-    Image spawnedImage;
+    Image SpawnedImage;
 
     // Start is called before the first frame update
     void Start()
     {
-        SpawnPosition.x = 0;
-        SpawnPosition.y = 0;
-        SpawnedSprite();
+        SpawnPosition = new Vector2(0, 0);
+        SpawnedImage = GetComponent<Image>();
+        SpawnedImage.rectTransform.sizeDelta = new Vector2(25, 25);
+        SpawnSprite();
     }
 
-    private void SpawnedSprite()
+    private void SpawnSprite()
     {
-        // Instantiate the Image prefab
-        spawnedImage = Instantiate(SpriteImage, transform);
-
         // Set the position of the spawned image in local space
-        spawnedImage.rectTransform.localPosition = SpawnPosition;
+        SpawnedImage.rectTransform.localPosition = SpawnPosition;
 
         // Set the sprite of the spawned image
-        spawnedImage.sprite = SpriteToSpawn;
+        SpawnedImage.sprite = SpriteToSpawn;
 
         // Ensure the spawned image is active
-        spawnedImage.gameObject.SetActive(true);
+        SpawnedImage.gameObject.SetActive(true);
     }
 
     public void UpdateSpriteLocationInGame(double Normalized_XCoordinate, double Normalized_YCoordinate)
     {
         SpawnPosition.x = (float)Normalized_XCoordinate;
         SpawnPosition.y = (float)Normalized_YCoordinate;
-        spawnedImage.rectTransform.localPosition = SpawnPosition;
+        SpawnedImage.rectTransform.localPosition = SpawnPosition;
     }
 }

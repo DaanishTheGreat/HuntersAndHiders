@@ -56,11 +56,12 @@ public class PlayerSpriteUpdateLocation : MonoBehaviour
     private string BingMapsApiUrlPart1 = "https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/";
     //In between here add Latitude and Longitude Coordinates
     private string BingMapsAPIUrlPart2 = "/15?&mapSize=2000,2000&mapMetadata=1&o=json&key=";
-    private string BingMapsAPIUrlPart3Key = "AqD8HayAQ00gtXGOd6w9ZDycXXDWz_MbAPxRnYmW1JpLMsstsWIHpgN8dCqZxyN0";
+    //SECRET KEY *****************************************************************************************************************
+    private string BingMapsAPIUrlPart3Key = "AqD8HayAQ00gtXGOd6w9ZDycXXDWz_MbAPxRnYmW1JpLMsstsWIHpgN8dCqZxyN0"; //SECRET KEY
 
     public IEnumerator UpdateLocationOnMap(double Latitude, double Longitude)
     {
-        string BingMapsApiUrl = BingMapsApiUrlPart1 + "38.96912111350505, -77.51917510666344" + BingMapsAPIUrlPart2 + BingMapsAPIUrlPart3Key;
+        string BingMapsApiUrl = BingMapsApiUrlPart1 + Latitude + "," + Longitude + BingMapsAPIUrlPart2 + BingMapsAPIUrlPart3Key;
         
         UnityWebRequest WorldWideWeb = UnityWebRequest.Get(BingMapsApiUrl);
         yield return WorldWideWeb.SendWebRequest();
@@ -112,8 +113,8 @@ public class PlayerSpriteUpdateLocation : MonoBehaviour
         double SouthLatitude = BoundingBox[0];
         double WestLongitude = BoundingBox[1];
 
-        double NorthLatitude = BoundingBox[1];
-        double EastLongitude = BoundingBox[1];
+        double NorthLatitude = BoundingBox[2];
+        double EastLongitude = BoundingBox[3];
 
 
         double XLatitudeRange = Math.Abs(SouthLatitude - NorthLatitude);

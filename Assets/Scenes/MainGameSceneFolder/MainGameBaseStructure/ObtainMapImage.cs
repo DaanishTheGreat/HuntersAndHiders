@@ -14,7 +14,8 @@ public class ObtainMapImage : MonoBehaviour
     private string BingMapsApiUrlPart1 = "https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/";
     //In between here add Latitude and Longitude Coordinates
     private string BingMapsAPIUrlPart2 = "/15?&mapSize=2000,2000&key=";
-    private string BingMapsAPIUrlPart3Key = "AqD8HayAQ00gtXGOd6w9ZDycXXDWz_MbAPxRnYmW1JpLMsstsWIHpgN8dCqZxyN0";
+    //SECRET KEY *****************************************************************************************************************
+    private string BingMapsAPIUrlPart3Key = "AqD8HayAQ00gtXGOd6w9ZDycXXDWz_MbAPxRnYmW1JpLMsstsWIHpgN8dCqZxyN0"; //SECRET KEY
 
 /*
     public ObtainMapImage(GameObject GetMapImageGameObject)
