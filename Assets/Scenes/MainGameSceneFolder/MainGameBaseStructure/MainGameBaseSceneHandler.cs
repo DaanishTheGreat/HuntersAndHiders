@@ -59,12 +59,11 @@ public class MainGameBaseSceneHandler : MonoBehaviour
     private void UpdatePlayerLocation()
     {
         List<double> PlayerLocationCoordinates = PlayerLocationServiceObject.UpdateGPSData();
-        List<double> Normalized_PlayerLocationCoordinates = PlayerSpriteUpdateLocationObject.NormalizationOfLocationCoordinates(PlayerLocationCoordinates[0], PlayerLocationCoordinates[1]);
-        
+        List<double> Normalized_PlayerLocationCoordinates = PlayerSpriteUpdateLocationObject.ScaleLocationUsingLerp(PlayerLocationCoordinates[0], PlayerLocationCoordinates[1]);
+
         SpriteOnMap InstanceOfOneSpriteOnMapPlayer = GameObject.Find("SpriteImage").GetComponent<SpriteOnMap>();
 
         //SpriteOnMap Already Instantiated, if multiple are instantiated then adapt this to include multiple
         InstanceOfOneSpriteOnMapPlayer.UpdateSpriteLocationInGame(Normalized_PlayerLocationCoordinates[0], Normalized_PlayerLocationCoordinates[1]);
     }
 }
-// What could go wrong: Normalization and UpdateSpriteLocationInGame

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LiveMaps : MonoBehaviour
 {
+    //Map Interaction Configuration
     public float zoomSpeed = 0.2f;
-    public float maxZoom = 2.0f;
-    public float minZoom = 1.0f;
+    public float maxZoom = 100.0f;
+    public float minZoom = 0.005f;
     public float slideSpeed = 30.0f;
 
     private Vector3 startingScale;

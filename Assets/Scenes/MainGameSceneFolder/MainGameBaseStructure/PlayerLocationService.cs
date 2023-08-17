@@ -37,7 +37,7 @@ public class PlayerLocationService : MonoBehaviour
         }
     }
 
-    public List<Double> UpdateGPSData()
+    public List<double> UpdateGPSData()
     {
         List<double> CoordinatesList = new List<double>(); 
 

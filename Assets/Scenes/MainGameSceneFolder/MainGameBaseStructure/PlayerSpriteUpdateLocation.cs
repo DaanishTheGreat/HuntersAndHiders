@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 public class MapCenter
 {
@@ -98,17 +99,9 @@ public class PlayerSpriteUpdateLocation : MonoBehaviour
         }
     }
 
-    public List<double> NormalizationOfLocationCoordinates(double XCoordinate, double YCoordinate)
+    public List<double> ScaleLocationUsingLerp (double YCoordinateLatitude, double XCoordinateLongitude)
     {
-        if(ObtainedJsonString != 1)
-        {
-            Debug.Log("ObtainedJsonString was not called or was not successful, Normalization function cannot run");
-            return null;
-        }
-
-        UnityEngine.UI.Image ImageMap = ImageMapGameObject.GetComponent<UnityEngine.UI.Image>();
-        List<double> NormalizedCoordinates = new List<double>();
-
+        List<double> ScaledCoordinates = new List<double>();
 
         double SouthLatitude = BoundingBox[0];
         double WestLongitude = BoundingBox[1];
@@ -116,24 +109,12 @@ public class PlayerSpriteUpdateLocation : MonoBehaviour
         double NorthLatitude = BoundingBox[2];
         double EastLongitude = BoundingBox[3];
 
+        double ScaledCoordinateY = Mathf.Lerp(-1250, 1250, Mathf.InverseLerp((float)SouthLatitude, (float)NorthLatitude, (float)YCoordinateLatitude));
+        double ScaledCoordinateX = Mathf.Lerp(-1250, 1250, Mathf.InverseLerp((float)WestLongitude, (float)EastLongitude, (float)XCoordinateLongitude));
 
-        double XLatitudeRange = Math.Abs(SouthLatitude - NorthLatitude);
-        double YLongitudeRange = Math.Abs(WestLongitude - EastLongitude); 
+        ScaledCoordinates.Add(ScaledCoordinateX);
+        ScaledCoordinates.Add(ScaledCoordinateY);
 
-        //Hardcoded Range Targets, Change to height and 
-        double XRangeTarget = ImageMap.rectTransform.sizeDelta.x;
-        double YRangeTarget = ImageMap.rectTransform.sizeDelta.y;
-
-        double XNormalized = (XCoordinate - SouthLatitude) / XLatitudeRange;
-        double YNormalized = (YCoordinate - WestLongitude) / YLongitudeRange;
-
-        //1250 hardcoded Change it to dynamic variable
-        double FinalXCoordinate = (XNormalized * XRangeTarget) - 1250;
-        double FinalYCoordinate = (XNormalized * XRangeTarget) - 1250;
-
-        NormalizedCoordinates.Add(FinalXCoordinate);
-        NormalizedCoordinates.Add(FinalYCoordinate);
-
-        return NormalizedCoordinates;
+        return ScaledCoordinates;
     }
 }
