@@ -23,31 +23,15 @@ public class ClientConnectedHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UnityServices.InitializeAsync();
+        var InitializeUnityServicesTask = UnityServices.InitializeAsync();
         ClientInstructionsGameObject.SetActive(false); 
         ConnectedPlayersGameObject.SetActive(false);
         JoinRelay();
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
     }
 
-    // Update is called once per frame
-    void Update() //Change to on client connect server updates, sending RPC every frame is extremely inefficient
+    void Update()
     {
-        /* Optimized Version in OnClientConnected
-        if(IsConnected == true)
-        {
-            GameObject PlayerHost = GetHostPlayer(); 
-            PlayerInstanceScript PlayerHostInstanceScript = PlayerHost.GetComponent<PlayerInstanceScript>();
-            PlayerHostInstanceScript.RequestPlayerNamesToServerRpc();
-            string PlayerNames = "";
-            foreach(string PlayerName in PlayerInstanceScript.PlayerNames)
-            {
-                PlayerNames = PlayerNames + " " + PlayerName;
-            }
-            TMP_Text ConnectedPlayerTextMeshPro = ConnectedPlayersGameObject.GetComponent<TMP_Text>();
-            ConnectedPlayerTextMeshPro.text = "Connected Players: " + PlayerNames; 
-        }
-        */
 
         if(IsConnected == true)
         {

@@ -17,6 +17,7 @@ public class CreateLobbyHandler : MonoBehaviour
 {
     //Start UGS
     public GameObject PlayerPrefab; 
+    public GameObject ServerNetworkManager;
 
     private bool IsConnected = false;
     private bool PlayerNameUpdatedToServer = false;
@@ -75,7 +76,23 @@ public class CreateLobbyHandler : MonoBehaviour
 
     public void StartGameButton()
     {
-        SceneManager.LoadScene("MainGameScene");
+        // Hide and Seek gamemode
+        if(CreateGameLobbyHandler.PlayerChosenGameMode == 0)
+        {
+            /*
+            GameObject[] ListOfPlayerClientObjects = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
+            StartCoroutine(LoadSceneAndTransferGameObjects("HideAndSeekScene", ServerNetworkManager, ListOfPlayerClientObjects)); 
+            */
+
+            GameObject PlayerHost = GetHostPlayer();
+            PlayerInstanceScript PlayerHostInstanceScript = PlayerHost.GetComponent<PlayerInstanceScript>();
+            PlayerHostInstanceScript.ChangeHostSceneServerRpc("HideAndSeekScene");
+        }
+        // Hot and Cold
+        else if(CreateGameLobbyHandler.PlayerChosenGameMode == 1)
+        {
+            // Not Created
+        }
     }
 
     private GameObject GetHostPlayer()

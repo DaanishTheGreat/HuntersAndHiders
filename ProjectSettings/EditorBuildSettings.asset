@@ -6,12 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainGameSceneFolder/MainGameBaseStructure/MainGameBaseScene.unity
-    guid: 274298c346e51f344a795449daa4c934
-  - enabled: 1
-    path: Assets/Scenes/MainGameSceneFolder/MainGameScene.unity
-    guid: 1c547ee3640c9164785af1843198fa68
-  - enabled: 1
     path: Assets/Scenes/EnterScreenScene/EnterScreen.unity
     guid: fcb8bf37469732b41a471b562eb2a9a4
   - enabled: 1
@@ -26,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JoinGame Scene/ClientConnectedFolder/ClientConnectedScene.unity
     guid: 64aaccc75c54fd74687d39480cdfb66f
+  - enabled: 1
+    path: Assets/Scenes/MainGameSceneFolder/HideAndSeekGamemode/HideAndSeekScene.unity
+    guid: 6ac0ffa9de238c945a5653949276f185
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: ed701e7cf6ea6bb469cea872387c65c0, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 14a25bffac3549a4fa79ca073bba151f, type: 2}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class PlayerInstanceScript : NetworkBehaviour
 {
@@ -10,17 +11,6 @@ public class PlayerInstanceScript : NetworkBehaviour
     public static List<string> PlayerNames = new List<string>();
 
     public string InstancePlayerName = "Null Manually Instantiated";
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     [ServerRpc]
     public void SendPlayerNameToServerRpc(string PlayerName = "Developer Instantiated Null")
@@ -51,4 +41,23 @@ public class PlayerInstanceScript : NetworkBehaviour
     }
     //End of Client Requested Player Name Data Rpc Bundle
 
+    [ServerRpc]
+    public void ChangeHostSceneServerRpc(string SceneName)
+    {
+        NetworkManager.SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
+    }
+
+/*
+    public override void OnNetworkSpawn()
+    {
+        Debug.Log("Is Host: " + IsHost);
+        if(IsHost == false)
+        {
+            //Cant work because only server can start Network Scene Event
+            //NetworkManager.SceneManager.LoadScene("ClientConnectedScene", LoadSceneMode.Single);
+
+            SceneManager.LoadScene("ClientConnectedScene", LoadSceneMode.Additive);
+        }
+    }
+    */
 }
