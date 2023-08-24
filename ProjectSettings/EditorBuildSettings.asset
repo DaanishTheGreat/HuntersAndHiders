@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/JoinGame Scene/JoinGameFolder/JoinGameScene.unity
     guid: bd089f9b7620bda45a21a744eeb80219
   - enabled: 1
-    path: Assets/Scenes/JoinGame Scene/ClientConnectedFolder/ClientConnectedScene.unity
+    path: Assets/Scenes/JoinGame Scene/ClientConnectedFolder_InActive/ClientConnectedScene.unity
     guid: 64aaccc75c54fd74687d39480cdfb66f
   - enabled: 1
     path: Assets/Scenes/MainGameSceneFolder/HideAndSeekGamemode/HideAndSeekScene.unity

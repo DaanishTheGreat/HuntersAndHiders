@@ -31,6 +31,8 @@ public class CreateGameLobbyHandler : MonoBehaviour
         {
             //Need NumberOfPlayerInputfield specific error, this is just a placeholder to show not valid input value
             //Need Int
+            //ANS:  Try doing-> catch (FormatException) -> the use of this is when the format of an argument is invalid or when a composite format string is not well formed
+            //  https://learn.microsoft.com/en-us/dotnet/api/system.formatexception?view=net-7.0
             ProvideNameErrorText.SetActive(true);
         }
     }
@@ -48,6 +50,10 @@ public class CreateGameLobbyHandler : MonoBehaviour
     public void CreateGameOnClick()
     {
         if(PlayerName_InputField.Equals(""))
+        /*We should have a rule where the length of the characters should be 2 characters to 8 characters
+        if(PlayerName_InputField.Equals("") || PlayerName_InputField.Length < 3 || PlayerName_InputField > 8)
+        */
+
         {
             ProvideNameErrorText.SetActive(true);
         }
