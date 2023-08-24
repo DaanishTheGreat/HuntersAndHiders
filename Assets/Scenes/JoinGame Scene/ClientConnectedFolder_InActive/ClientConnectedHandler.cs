@@ -21,9 +21,9 @@ public class ClientConnectedHandler : MonoBehaviour
     private bool PlayerNameUpdatedToServer = false;
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
-        var InitializeUnityServicesTask = UnityServices.InitializeAsync();
+        await UnityServices.InitializeAsync();
         ClientInstructionsGameObject.SetActive(false); 
         ConnectedPlayersGameObject.SetActive(false);
         JoinRelay();

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// Notes: NumberOfPlayerInputField change to drop down or scroll dont leave as input box
+
 public class CreateGameLobbyHandler : MonoBehaviour
 {
     public GameObject ProvideNameErrorText;
