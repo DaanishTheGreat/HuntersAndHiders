@@ -4,11 +4,50 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
+
+public class PlayerClientData
+{
+    private double Latitude;
+    private double Longitude;
+    private string PlayerClientName;
+
+    public PlayerClientData(string PlayerClientNameInput, double LatitudeInput, double LongitudeInput)
+    {
+        PlayerClientName = PlayerClientNameInput;
+        Latitude = LatitudeInput;
+        Longitude = LongitudeInput;
+    }
+
+    public List<double> GetCoordinates()
+    {
+        List<double> CoordinateList = new List<double>
+        {
+            Latitude,
+            Longitude
+        };
+
+        return CoordinateList;
+    }
+
+    public void UpdateCoordinates(double LatitudeInput, double LongitudeInput)
+    {
+        Latitude = LatitudeInput;
+        Longitude = LongitudeInput;
+    }
+
+    public string GetPlayerClientName()
+    {
+        return PlayerClientName;
+    }
+}
 
 public class PlayerInstanceScript : NetworkBehaviour
 {
     
     public static List<string> PlayerNames = new List<string>();
+
+    public static List<PlayerClientData> PlayerClientDataList = new List<PlayerClientData>();
 
     public string InstancePlayerName = "Null Manually Instantiated";
 
@@ -60,4 +99,50 @@ public class PlayerInstanceScript : NetworkBehaviour
         }
     }
     */
+
+    // Start of Main Game Scenes Location Sync
+
+    [ServerRpc]
+    public void SendPlayerLocationsToServerRpc(string PlayerName, double Latitude, double Longitude)
+    {
+        int PlayerClientDataIndex = 0;
+        bool PlayerClientObjectWithPlayerNameExistsInList = false;
+        foreach(PlayerClientData EachPlayerClientData in PlayerClientDataList)
+        {
+            if(EachPlayerClientData.GetPlayerClientName().Equals(PlayerName))
+            {
+                PlayerClientObjectWithPlayerNameExistsInList = true;
+                break;
+            }
+            PlayerClientDataIndex++;
+        }
+
+        if(PlayerClientObjectWithPlayerNameExistsInList == true)
+        {
+            PlayerClientData PlayerClientDataAtIndex = PlayerClientDataList[PlayerClientDataIndex];
+            PlayerClientDataAtIndex.UpdateCoordinates(Latitude, Longitude);
+            PlayerClientDataList[PlayerClientDataIndex] = PlayerClientDataAtIndex;
+        }
+        else
+        {
+            PlayerClientData NewPlayerClientDataObject = new PlayerClientData(PlayerName, Latitude, Longitude);
+            PlayerClientDataList.Add(NewPlayerClientDataObject);
+        }
+    }
+
+    // Start of Server Client Get Request RPCs
+    [ServerRpc]
+    public void RequestAllPlayerCoordinatesServerRpc()
+    {
+        // DO THIS NEXT
+    }
+
+    [ClientRpc]
+    public void SendAllPlayerCoordinatestoClientRpc()
+    {
+
+    }
+    // End of Server Client Get Request RPCs
+
+    // End of Main Game Scenes Location Sync
 }

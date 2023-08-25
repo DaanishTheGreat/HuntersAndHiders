@@ -25,7 +25,7 @@ public class CreateLobbyHandler : MonoBehaviour
     private bool PlayerNameUpdatedToServer = false;
     void Start()
     {
-        SetSceneForClientOrHostIntance();
+        SetSceneForClientOrHostInstance();
 
         GameObject PlayerTextListGameObject = GameObject.Find("Players");
         TextMeshProUGUI PlayerTextList = PlayerTextListGameObject.GetComponent<TextMeshProUGUI>();
@@ -131,7 +131,7 @@ public class CreateLobbyHandler : MonoBehaviour
         }
     }
 
-    private async void SetSceneForClientOrHostIntance()
+    private async void SetSceneForClientOrHostInstance()
     {
         if (JoinGameSceneHandler.JoinGameSceneCalled == 1)
         {

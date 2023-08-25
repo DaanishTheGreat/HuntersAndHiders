@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class HideAndSeekSceneHandler : MonoBehaviour
@@ -73,4 +74,33 @@ public class HideAndSeekSceneHandler : MonoBehaviour
         //SpriteOnMap Already Instantiated, if multiple are instantiated then adapt this to include multiple
         InstanceOfOneSpriteOnMapPlayer.UpdateSpriteLocationInGame(Normalized_PlayerLocationCoordinates[0], Normalized_PlayerLocationCoordinates[1]);
     }
+
+    private void UpdatePlayerLocationsFromServer()
+    {
+        // DO THIS NEXT
+    }
+
+    private void SendPlayerLocationToServer(string PlayerName, double Latitude, double Longitude)
+    {
+        GameObject PlayerHostGameObject = GetHostPlayer();
+        PlayerInstanceScript PlayerHostPlayerInstanceScript = PlayerHostGameObject.GetComponent<PlayerInstanceScript>();
+        PlayerHostPlayerInstanceScript.SendPlayerLocationsToServerRpc(PlayerHostPlayerInstanceScript.InstancePlayerName, Latitude, Longitude);
+    }
+
+    private GameObject GetHostPlayer()
+    {
+        GameObject PlayerHost = null;
+        GameObject[] PlayerClients = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
+
+        foreach (GameObject val in PlayerClients)
+        {
+            NetworkObject IsOwnerOrNot = val.GetComponent<NetworkObject>();
+            if (IsOwnerOrNot.IsOwner)
+            {
+                PlayerHost = val;
+            }
+        }
+        return PlayerHost;
+    }
+
 }
