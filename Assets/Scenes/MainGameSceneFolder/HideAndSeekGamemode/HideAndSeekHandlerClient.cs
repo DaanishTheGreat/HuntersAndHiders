@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class HideAndSeekSceneHandler : MonoBehaviour
+public class HideAndSeekHandlerClient : MonoBehaviour
 {
     public GameObject MapImageGameObject;
     public GameObject AllRequiredScriptsGameObject;
     public GameObject SpriteImageGameObject;
 
-    //Handler Variables
     private int UserLocationDateIsPrimed = 0;
     private int Event_HasObtainedMapImage = 0;
     private int Event_HasObtainedBoundingBox = 0;
     private int ObtainedMapImageAPICalled = 0;
 
+    private int GetAndUpdatePlayerLocationsCoroutineCalled = 0;
+
     private PlayerLocationService_CommonComponent PlayerLocationServiceObject;
     private PlayerSpriteUpdateLocation_CommonComponent PlayerSpriteUpdateLocationObject;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         PlayerLocationServiceObject = AllRequiredScriptsGameObject.GetComponent<PlayerLocationService_CommonComponent>();
@@ -48,6 +48,12 @@ public class HideAndSeekSceneHandler : MonoBehaviour
         else if(UserLocationDateIsPrimed == 1 && Event_HasObtainedMapImage == 1 && Event_HasObtainedBoundingBox == 1)
         {
             UpdatePlayerLocation();
+
+            if(GetAndUpdatePlayerLocationsCoroutineCalled == 0)
+            {
+                StartCoroutine(SendAndRecievePlayerData());
+                GetAndUpdatePlayerLocationsCoroutineCalled = 1;
+            }
         }
     }
 
@@ -75,16 +81,27 @@ public class HideAndSeekSceneHandler : MonoBehaviour
         InstanceOfOneSpriteOnMapPlayer.UpdateSpriteLocationInGame(Normalized_PlayerLocationCoordinates[0], Normalized_PlayerLocationCoordinates[1]);
     }
 
-    private void UpdatePlayerLocationsFromServer()
+    // RPC functions beyond this point
+
+    private List<PlayerClientData> UpdatePlayerLocationsFromServer()
     {
-        // DO THIS NEXT
+        GameObject PlayerHostGameObject = GetHostPlayer();
+        PlayerInstanceScript PlayerHostInstanceScript = PlayerHostGameObject.GetComponent<PlayerInstanceScript>();
+        PlayerHostInstanceScript.RequestAllPlayerCoordinatesServerRpc();
+
+        return PlayerInstanceScript.PlayerClientDataList;
     }
 
-    private void SendPlayerLocationToServer(string PlayerName, double Latitude, double Longitude)
+    private void SendPlayerLocationToServer()
     {
         GameObject PlayerHostGameObject = GetHostPlayer();
         PlayerInstanceScript PlayerHostPlayerInstanceScript = PlayerHostGameObject.GetComponent<PlayerInstanceScript>();
-        PlayerHostPlayerInstanceScript.SendPlayerLocationsToServerRpc(PlayerHostPlayerInstanceScript.InstancePlayerName, Latitude, Longitude);
+
+        List<double> PlayerLocationCoordinates = PlayerLocationServiceObject.UpdateGPSData();
+        List<double> Normalized_PlayerLocationCoordinates = PlayerSpriteUpdateLocationObject.ScaleLocationUsingLerp(PlayerLocationCoordinates[0], PlayerLocationCoordinates[1]);
+
+
+        PlayerHostPlayerInstanceScript.SendPlayerLocationsToServerRpc(PlayerHostPlayerInstanceScript.InstancePlayerName, Normalized_PlayerLocationCoordinates[0], Normalized_PlayerLocationCoordinates[1]);
     }
 
     private GameObject GetHostPlayer()
@@ -103,4 +120,14 @@ public class HideAndSeekSceneHandler : MonoBehaviour
         return PlayerHost;
     }
 
+    private IEnumerator SendAndRecievePlayerData()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1f);
+            SendPlayerLocationToServer();
+            yield return new WaitForSeconds(1f);
+            UpdatePlayerLocationsFromServer();
+        }
+    }
 }

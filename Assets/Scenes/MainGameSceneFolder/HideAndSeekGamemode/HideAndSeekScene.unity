@@ -576,6 +576,8 @@ GameObject:
   - component: {fileID: 1679706653}
   - component: {fileID: 1679706652}
   - component: {fileID: 1679706656}
+  - component: {fileID: 1679706658}
+  - component: {fileID: 1679706657}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -682,6 +684,34 @@ MonoBehaviour:
   MapImageGameObject: {fileID: 581519377}
   AllRequiredScriptsGameObject: {fileID: 187851419}
   SpriteImageGameObject: {fileID: 1905372154}
+--- !u!114 &1679706657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679706651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d6d707e436d6f41ac9d405d4df8b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapImageGameObject: {fileID: 581519377}
+  AllRequiredScriptsGameObject: {fileID: 187851419}
+  SpriteImageGameObject: {fileID: 1905372154}
+--- !u!114 &1679706658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679706651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7275c1a24c6c844a86136d196924e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanvasGameObject: {fileID: 1679706651}
 --- !u!1 &1905372154 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 275381907996284633, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}

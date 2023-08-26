@@ -6,25 +6,32 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using System;
 
-public class PlayerClientData
+public class PlayerClientData : INetworkSerializable
 {
-    private double Latitude;
-    private double Longitude;
+    private double Latitude_Normalized;
+    private double Longitude_Normalized;
     private string PlayerClientName;
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref Latitude_Normalized);
+        serializer.SerializeValue(ref Longitude_Normalized);
+        serializer.SerializeValue(ref PlayerClientName);
+    }
 
     public PlayerClientData(string PlayerClientNameInput, double LatitudeInput, double LongitudeInput)
     {
         PlayerClientName = PlayerClientNameInput;
-        Latitude = LatitudeInput;
-        Longitude = LongitudeInput;
+        Latitude_Normalized = LatitudeInput;
+        Longitude_Normalized = LongitudeInput;
     }
 
     public List<double> GetCoordinates()
     {
         List<double> CoordinateList = new List<double>
         {
-            Latitude,
-            Longitude
+            Latitude_Normalized,
+            Longitude_Normalized
         };
 
         return CoordinateList;
@@ -32,8 +39,8 @@ public class PlayerClientData
 
     public void UpdateCoordinates(double LatitudeInput, double LongitudeInput)
     {
-        Latitude = LatitudeInput;
-        Longitude = LongitudeInput;
+        Latitude_Normalized = LatitudeInput;
+        Longitude_Normalized = LongitudeInput;
     }
 
     public string GetPlayerClientName()
@@ -86,24 +93,8 @@ public class PlayerInstanceScript : NetworkBehaviour
         NetworkManager.SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
     }
 
-/*
-    public override void OnNetworkSpawn()
-    {
-        Debug.Log("Is Host: " + IsHost);
-        if(IsHost == false)
-        {
-            //Cant work because only server can start Network Scene Event
-            //NetworkManager.SceneManager.LoadScene("ClientConnectedScene", LoadSceneMode.Single);
-
-            SceneManager.LoadScene("ClientConnectedScene", LoadSceneMode.Additive);
-        }
-    }
-    */
-
-    // Start of Main Game Scenes Location Sync
-
     [ServerRpc]
-    public void SendPlayerLocationsToServerRpc(string PlayerName, double Latitude, double Longitude)
+    public void SendPlayerLocationsToServerRpc(string PlayerName, double NormalizedLatitude, double NormalizedLongitude)
     {
         int PlayerClientDataIndex = 0;
         bool PlayerClientObjectWithPlayerNameExistsInList = false;
@@ -120,12 +111,12 @@ public class PlayerInstanceScript : NetworkBehaviour
         if(PlayerClientObjectWithPlayerNameExistsInList == true)
         {
             PlayerClientData PlayerClientDataAtIndex = PlayerClientDataList[PlayerClientDataIndex];
-            PlayerClientDataAtIndex.UpdateCoordinates(Latitude, Longitude);
+            PlayerClientDataAtIndex.UpdateCoordinates(NormalizedLatitude, NormalizedLongitude);
             PlayerClientDataList[PlayerClientDataIndex] = PlayerClientDataAtIndex;
         }
         else
         {
-            PlayerClientData NewPlayerClientDataObject = new PlayerClientData(PlayerName, Latitude, Longitude);
+            PlayerClientData NewPlayerClientDataObject = new PlayerClientData(PlayerName, NormalizedLatitude, NormalizedLongitude);
             PlayerClientDataList.Add(NewPlayerClientDataObject);
         }
     }
@@ -133,14 +124,19 @@ public class PlayerInstanceScript : NetworkBehaviour
     // Start of Server Client Get Request RPCs
     [ServerRpc]
     public void RequestAllPlayerCoordinatesServerRpc()
-    {
-        // DO THIS NEXT
+    {   
+        int Index = 0;
+        foreach(PlayerClientData PlayerClientDataObj in PlayerClientDataList)
+        {
+            SendAllPlayerCoordinatestoClientRpc(PlayerClientDataObj, Index);
+            Index++;
+        }
     }
 
     [ClientRpc]
-    public void SendAllPlayerCoordinatestoClientRpc()
+    public void SendAllPlayerCoordinatestoClientRpc(PlayerClientData PlayerClientDataInput, int Index)
     {
-
+        PlayerClientDataList[Index] = PlayerClientDataInput;
     }
     // End of Server Client Get Request RPCs
 
