@@ -50,7 +50,7 @@ public class HideAndSeekSceneHandlerHost : MonoBehaviour
         }
         else if(UserLocationDateIsPrimed == 1 && Event_HasObtainedMapImage == 1 && Event_HasObtainedBoundingBox == 1)
         {
-            UpdatePlayerLocation();
+            //UpdatePlayerLocation();
 
             if(GetAndUpdatePlayerLocationsCoroutineCalled == 0)
             {
@@ -113,8 +113,19 @@ public class HideAndSeekSceneHandlerHost : MonoBehaviour
 
     private void SendPlayerLocationToServer()
     {
-        GameObject PlayerHostGameObject = GetHostPlayer();
-        PlayerInstanceScript PlayerHostPlayerInstanceScript = PlayerHostGameObject.GetComponent<PlayerInstanceScript>();
+        GameObject[] PlayerClientPrefabList = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
+        GameObject PlayerClientOwnedByHostGameObject = null;
+
+        foreach(GameObject PlayerClientLocal in PlayerClientPrefabList)
+        {
+            NetworkObject PlayerClientNetworkObject = PlayerClientLocal.GetComponent<NetworkObject>();
+            if(PlayerClientNetworkObject.IsOwner == true)
+            {
+                PlayerClientOwnedByHostGameObject = PlayerClientLocal;
+            }
+        }
+
+        PlayerInstanceScript PlayerHostPlayerInstanceScript = PlayerClientOwnedByHostGameObject.GetComponent<PlayerInstanceScript>();
 
         List<double> PlayerLocationCoordinates = PlayerLocationServiceObject.UpdateGPSData();
         List<double> Normalized_PlayerLocationCoordinates = PlayerSpriteUpdateLocationObject.ScaleLocationUsingLerp(PlayerLocationCoordinates[0], PlayerLocationCoordinates[1]);
@@ -149,20 +160,9 @@ public class HideAndSeekSceneHandlerHost : MonoBehaviour
     {
         foreach(PlayerClientData PlayerClientDataInstance in PlayerInstanceScript.PlayerClientDataList)
         {
-            GameObject InstantiatedSpriteImageGameObject = Instantiate(SpriteImageGameObject);
+            GameObject InstantiatedSpriteImageGameObject = Instantiate(SpriteImageGameObjectPrefab);
             InstantiatedSpriteImageGameObject.transform.SetParent(MapImageGameObject.transform);
         }
-
-        /* SpriteOnMap_CommonComponent is already a Component of SpriteImage_CommonComponent Prefab
-
-        GameObject[] ListOfInstantiatedPlayerClientPrefab = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
-        
-        foreach(GameObject InstantiatedPlayerClient in ListOfInstantiatedPlayerClientPrefab)
-        {
-            InstantiatedPlayerClient.AddComponent<SpriteOnMap_CommonComponent>();
-        }
-
-        */
     }
 
     private void DisplayPlayerClientsOnMap()

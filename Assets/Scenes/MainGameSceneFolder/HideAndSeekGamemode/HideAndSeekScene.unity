@@ -371,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 275381907996284633, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2079515946640566012, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}
       propertyPath: m_Pivot.x
@@ -688,7 +688,7 @@ MonoBehaviour:
   MapImageGameObject: {fileID: 581519377}
   AllRequiredScriptsGameObject: {fileID: 187851419}
   SpriteImageGameObject: {fileID: 1905372154}
-  SpriteImageGameObjectPrefab: {fileID: 1129527176018772281, guid: 7f2899fd4fe6c004fad82f013e6472d1, type: 3}
+  SpriteImageGameObjectPrefab: {fileID: 275381907996284633, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}
 --- !u!114 &1679706657
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -98,7 +98,14 @@ public class PlayerInstanceScript : NetworkBehaviour
     [ClientRpc]
     public void SendAllPlayerCoordinatestoClientRpc(PlayerClientData PlayerClientDataInput, int Index)
     {
-        PlayerClientDataList[Index] = PlayerClientDataInput;
+        if(Index == 0)
+        {
+            PlayerClientDataList.Clear();
+        }
+
+        PlayerClientDataList.Add(PlayerClientDataInput);
+        
+        Debug.Log("Sending Data To Client: " + PlayerClientDataInput.GetPlayerClientName());
     }
     // End of Server Client Get Request RPCs
 

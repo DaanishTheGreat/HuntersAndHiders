@@ -49,7 +49,7 @@ public class HideAndSeekHandlerClient : MonoBehaviour
         }
         else if(UserLocationDateIsPrimed == 1 && Event_HasObtainedMapImage == 1 && Event_HasObtainedBoundingBox == 1)
         {
-            UpdatePlayerLocation();
+            //UpdatePlayerLocation();
 
             if(GetAndUpdatePlayerLocationsCoroutineCalled == 0)
             {
@@ -96,14 +96,26 @@ public class HideAndSeekHandlerClient : MonoBehaviour
 
     private void SendPlayerLocationToServer()
     {
-        GameObject PlayerHostGameObject = GetHostPlayer();
-        PlayerInstanceScript PlayerHostPlayerInstanceScript = PlayerHostGameObject.GetComponent<PlayerInstanceScript>();
+        GameObject[] PlayerClientPrefabList = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
+        GameObject PlayerClientOwnedByClientGameObject = null;
+
+        foreach(GameObject PlayerClientLocal in PlayerClientPrefabList)
+        {
+            NetworkObject PlayerClientNetworkObject = PlayerClientLocal.GetComponent<NetworkObject>();
+            if(PlayerClientNetworkObject.IsOwner == true)
+            {
+                PlayerClientOwnedByClientGameObject = PlayerClientLocal;
+            }
+        }
+
+        PlayerInstanceScript PlayerLocalPlayerInstanceScript = PlayerClientOwnedByClientGameObject.GetComponent<PlayerInstanceScript>();
+        PlayerLocalPlayerInstanceScript.InstancePlayerName = JoinGameSceneHandler.PlayerName;
 
         List<double> PlayerLocationCoordinates = PlayerLocationServiceObject.UpdateGPSData();
         List<double> Normalized_PlayerLocationCoordinates = PlayerSpriteUpdateLocationObject.ScaleLocationUsingLerp(PlayerLocationCoordinates[0], PlayerLocationCoordinates[1]);
 
 
-        PlayerHostPlayerInstanceScript.SendPlayerLocationsToServerRpc(PlayerHostPlayerInstanceScript.InstancePlayerName, Normalized_PlayerLocationCoordinates[0], Normalized_PlayerLocationCoordinates[1]);
+        PlayerLocalPlayerInstanceScript.SendPlayerLocationsToServerRpc(PlayerLocalPlayerInstanceScript.InstancePlayerName, Normalized_PlayerLocationCoordinates[0], Normalized_PlayerLocationCoordinates[1]);
     }
 
     private GameObject GetHostPlayer()
@@ -148,7 +160,7 @@ public class HideAndSeekHandlerClient : MonoBehaviour
     {
         foreach(PlayerClientData PlayerClientDataInstance in PlayerInstanceScript.PlayerClientDataList)
         {
-            GameObject InstantiatedSpriteImageGameObject = Instantiate(SpriteImageGameObject);
+            GameObject InstantiatedSpriteImageGameObject = Instantiate(SpriteImageGameObjectPrefab);
             InstantiatedSpriteImageGameObject.transform.SetParent(MapImageGameObject.transform);
         }
         
