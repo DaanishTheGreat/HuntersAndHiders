@@ -9,7 +9,7 @@ public class SpriteOnMap_CommonComponent : MonoBehaviour
     public Sprite SpriteToSpawn;
     public Vector2 SpawnPosition;
 
-    Image SpawnedImage;
+    public Image SpawnedImage;
 
     // Start is called before the first frame update
     void Start()

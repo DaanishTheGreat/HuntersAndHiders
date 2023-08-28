@@ -134,7 +134,10 @@ PlayerSettings:
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
   bundleVersion: 1.0.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -8056123450401225350, guid: 14a25bffac3549a4fa79ca073bba151f, type: 2}
+  - {fileID: 11400000, guid: ed701e7cf6ea6bb469cea872387c65c0, type: 2}
+  - {fileID: 11400000, guid: ee39c2be3c17f8345baa50eed463acc4, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -157,7 +160,7 @@ PlayerSettings:
     Android: com.DefaultCompany.HuntersAndHiders
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
     Standalone: com.DefaultCompany.com.unity.template.mobile2D
-    iPhone: com.DefaultCompany.com.unity.template.mobile2D
+    iPhone: com.DefaultCompany.com.unity.template.mobile2DDaanish
     tvOS: com.DefaultCompany.com.unity.template.mobile2D
   buildNumber:
     Bratwurst: 0
@@ -533,7 +536,7 @@ PlayerSettings:
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
   cameraUsageDescription: 
-  locationUsageDescription: 
+  locationUsageDescription: Needed For Core Gameplay
   microphoneUsageDescription: 
   bluetoothUsageDescription: 
   macOSTargetOSVersion: 10.13.0

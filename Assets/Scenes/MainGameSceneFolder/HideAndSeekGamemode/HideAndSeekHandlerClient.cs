@@ -8,6 +8,8 @@ public class HideAndSeekHandlerClient : MonoBehaviour
     public GameObject MapImageGameObject;
     public GameObject AllRequiredScriptsGameObject;
     public GameObject SpriteImageGameObject;
+    public GameObject SpriteImageGameObjectPrefab;
+
 
     private int UserLocationDateIsPrimed = 0;
     private int Event_HasObtainedMapImage = 0;
@@ -122,12 +124,63 @@ public class HideAndSeekHandlerClient : MonoBehaviour
 
     private IEnumerator SendAndRecievePlayerData()
     {
+        int HasInitializedPlayerClientsOnMap = 0;
+        // Updates PlayerClient Locations on Map Every 3 Seconds
         while(true)
         {
-            yield return new WaitForSeconds(1f);
             SendPlayerLocationToServer();
             yield return new WaitForSeconds(1f);
             UpdatePlayerLocationsFromServer();
+            yield return new WaitForSeconds(1f);
+            if(HasInitializedPlayerClientsOnMap == 0)
+            {
+                InitializePlayerClientsOnMap();
+                HasInitializedPlayerClientsOnMap = 1;
+            }
+            yield return new WaitForSeconds(1f);
+            DisplayPlayerClientsOnMap();
         }
     }
+
+    // InitializeAndDisplayPlayerClientsOnMap Start Here
+
+    private void InitializePlayerClientsOnMap()
+    {
+        foreach(PlayerClientData PlayerClientDataInstance in PlayerInstanceScript.PlayerClientDataList)
+        {
+            GameObject InstantiatedSpriteImageGameObject = Instantiate(SpriteImageGameObject);
+            InstantiatedSpriteImageGameObject.transform.SetParent(MapImageGameObject.transform);
+        }
+        
+        /* Look at HideAndSeekSceneHandlerHost script for details as to why this isnt needed
+
+        GameObject[] ListOfInstantiatedPlayerClientPrefab = GameObject.FindGameObjectsWithTag("PlayerClientPrefab");
+        
+        foreach(GameObject InstantiatedPlayerClient in ListOfInstantiatedPlayerClientPrefab)
+        {
+            InstantiatedPlayerClient.AddComponent<SpriteOnMap_CommonComponent>();
+        }
+
+        */
+    }
+
+    private void DisplayPlayerClientsOnMap()
+    {
+        GameObject[] ListOfInstantiatedPlayerClientPrefab = GameObject.FindGameObjectsWithTag("SpriteImagePrefab");
+
+        int Index = 0;
+        foreach(PlayerClientData PlayerClientDataInstance in PlayerInstanceScript.PlayerClientDataList)
+        {
+            List<double> NormalizedCoordinates = PlayerClientDataInstance.GetCoordinates();
+
+            GameObject PlayerClientPrefabInstance = ListOfInstantiatedPlayerClientPrefab[Index];
+
+            SpriteOnMap_CommonComponent PlayerClientSpriteOnMapComponent = PlayerClientPrefabInstance.GetComponent<SpriteOnMap_CommonComponent>();
+            PlayerClientSpriteOnMapComponent.UpdateSpriteLocationInGame(NormalizedCoordinates[0], NormalizedCoordinates[1]);
+
+            Index++;
+        }
+    }
+
+    // InitializeAndDisplayPlayerClientsOnMap End Here
 }

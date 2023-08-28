@@ -369,6 +369,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpriteImage_CommonComponent
       objectReference: {fileID: 0}
+    - target: {fileID: 275381907996284633, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2079515946640566012, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -676,7 +680,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679706651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6af2ad4e0128603478d6de9490e083e7, type: 3}
   m_Name: 
@@ -684,6 +688,7 @@ MonoBehaviour:
   MapImageGameObject: {fileID: 581519377}
   AllRequiredScriptsGameObject: {fileID: 187851419}
   SpriteImageGameObject: {fileID: 1905372154}
+  SpriteImageGameObjectPrefab: {fileID: 1129527176018772281, guid: 7f2899fd4fe6c004fad82f013e6472d1, type: 3}
 --- !u!114 &1679706657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,7 +696,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679706651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7d6d707e436d6f41ac9d405d4df8b5d, type: 3}
   m_Name: 
@@ -699,6 +704,7 @@ MonoBehaviour:
   MapImageGameObject: {fileID: 581519377}
   AllRequiredScriptsGameObject: {fileID: 187851419}
   SpriteImageGameObject: {fileID: 1905372154}
+  SpriteImageGameObjectPrefab: {fileID: 275381907996284633, guid: 1faa8aed8797e1947837f4aaa0ceaa90, type: 3}
 --- !u!114 &1679706658
 MonoBehaviour:
   m_ObjectHideFlags: 0

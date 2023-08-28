@@ -6,48 +6,6 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using System;
 
-public class PlayerClientData : INetworkSerializable
-{
-    private double Latitude_Normalized;
-    private double Longitude_Normalized;
-    private string PlayerClientName;
-
-    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-    {
-        serializer.SerializeValue(ref Latitude_Normalized);
-        serializer.SerializeValue(ref Longitude_Normalized);
-        serializer.SerializeValue(ref PlayerClientName);
-    }
-
-    public PlayerClientData(string PlayerClientNameInput, double LatitudeInput, double LongitudeInput)
-    {
-        PlayerClientName = PlayerClientNameInput;
-        Latitude_Normalized = LatitudeInput;
-        Longitude_Normalized = LongitudeInput;
-    }
-
-    public List<double> GetCoordinates()
-    {
-        List<double> CoordinateList = new List<double>
-        {
-            Latitude_Normalized,
-            Longitude_Normalized
-        };
-
-        return CoordinateList;
-    }
-
-    public void UpdateCoordinates(double LatitudeInput, double LongitudeInput)
-    {
-        Latitude_Normalized = LatitudeInput;
-        Longitude_Normalized = LongitudeInput;
-    }
-
-    public string GetPlayerClientName()
-    {
-        return PlayerClientName;
-    }
-}
 
 public class PlayerInstanceScript : NetworkBehaviour
 {
@@ -116,7 +74,8 @@ public class PlayerInstanceScript : NetworkBehaviour
         }
         else
         {
-            PlayerClientData NewPlayerClientDataObject = new PlayerClientData(PlayerName, NormalizedLatitude, NormalizedLongitude);
+            PlayerClientData NewPlayerClientDataObject = new PlayerClientData();
+            NewPlayerClientDataObject.InitializePlayerClientData(PlayerName, NormalizedLatitude, NormalizedLongitude);
             PlayerClientDataList.Add(NewPlayerClientDataObject);
         }
     }
@@ -126,7 +85,10 @@ public class PlayerInstanceScript : NetworkBehaviour
     public void RequestAllPlayerCoordinatesServerRpc()
     {   
         int Index = 0;
-        foreach(PlayerClientData PlayerClientDataObj in PlayerClientDataList)
+
+        List<PlayerClientData> PlayerClientDataListLocal = PlayerClientDataList;
+
+        foreach(PlayerClientData PlayerClientDataObj in PlayerClientDataListLocal.ToList())
         {
             SendAllPlayerCoordinatestoClientRpc(PlayerClientDataObj, Index);
             Index++;

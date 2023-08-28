@@ -9,7 +9,7 @@ public class HideAndSeekSceneSwitchClientHost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(JoinGameSceneHandler.JoinGameSceneCalled == 1)
+        if(JoinGameSceneHandler.JoinGameSceneCalled == 0)
         {
             CanvasGameObject.GetComponent<HideAndSeekSceneHandlerHost>().enabled = true;
             CanvasGameObject.GetComponent<HideAndSeekSceneSwitchClientHost>().enabled = false;
