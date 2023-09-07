@@ -151,6 +151,7 @@ public class HideAndSeekHandlerClient : MonoBehaviour
             }
             yield return new WaitForSeconds(1f);
             DisplayPlayerClientsOnMap();
+
         }
     }
 

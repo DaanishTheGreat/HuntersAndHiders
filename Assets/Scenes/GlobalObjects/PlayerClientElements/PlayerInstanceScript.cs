@@ -16,6 +16,8 @@ public class PlayerInstanceScript : NetworkBehaviour
 
     public string InstancePlayerName = "Null Manually Instantiated";
 
+    public int CurrentSortingProperty = 0;
+
     [ServerRpc]
     public void SendPlayerNameToServerRpc(string PlayerName = "Developer Instantiated Null")
     {
@@ -75,7 +77,8 @@ public class PlayerInstanceScript : NetworkBehaviour
         else
         {
             PlayerClientData NewPlayerClientDataObject = new PlayerClientData();
-            NewPlayerClientDataObject.InitializePlayerClientData(PlayerName, NormalizedLatitude, NormalizedLongitude);
+            NewPlayerClientDataObject.InitializePlayerClientData(PlayerName, NormalizedLatitude, NormalizedLongitude, CurrentSortingProperty);
+            CurrentSortingProperty++;
             PlayerClientDataList.Add(NewPlayerClientDataObject);
         }
     }
