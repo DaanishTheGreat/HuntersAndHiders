@@ -135,7 +135,6 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   bundleVersion: 1.0.0
   preloadedAssets:
-  - {fileID: -8056123450401225350, guid: 14a25bffac3549a4fa79ca073bba151f, type: 2}
   - {fileID: 11400000, guid: ed701e7cf6ea6bb469cea872387c65c0, type: 2}
   - {fileID: 11400000, guid: ee39c2be3c17f8345baa50eed463acc4, type: 2}
   metroInputSource: 0
@@ -272,7 +271,7 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 1
+  androidUseCustomKeystore: 0
   m_AndroidBanners:
   - width: 320
     height: 180

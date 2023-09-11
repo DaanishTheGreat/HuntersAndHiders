@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+// Host only class
 public class GameMechanicsHideAndSeek : MonoBehaviour
 {
 
     //Change this for hide and seek trigger distance (Exclusive)
     private int MinimumDistanceForFlagTriggerInPixels = 5;
 
-    public void CheckDistanceOfPlayerClientsAndFlagIfCaught(List<PlayerClientData> PlayerClientList, double SouthLatitude, double NorthLatitude, double WestLongitude, double EastLongitude)
+    public List<PlayerClientData> CheckDistanceOfPlayerClientsAndFlagAsSeekerIfCaught(List<PlayerClientData> PlayerClientList)
     {
         List<PlayerClientData> Seekers = new List<PlayerClientData>();
         List<PlayerClientData> Hiders = new List<PlayerClientData>();
@@ -34,7 +36,7 @@ public class GameMechanicsHideAndSeek : MonoBehaviour
             {
                 List<double> PlayerClientHider_NormalizedCoordinates = PlayerClientHider.GetCoordinates();
                 
-                double DistanceInPixels = Math.Sqrt(Math.Pow(PlayerClientSeeker_NormalizedCoordinates[0] + PlayerClientHider_NormalizedCoordinates[0], 2) + Math.Pow(PlayerClientSeeker_NormalizedCoordinates[1] + PlayerClientHider_NormalizedCoordinates[1], 2)); 
+                double DistanceInPixels = Math.Sqrt(Math.Pow(PlayerClientSeeker_NormalizedCoordinates[0] - PlayerClientHider_NormalizedCoordinates[0], 2) + Math.Pow(PlayerClientSeeker_NormalizedCoordinates[1] - PlayerClientHider_NormalizedCoordinates[1], 2)); 
 
                 if(DistanceInPixels < MinimumDistanceForFlagTriggerInPixels)
                 {
@@ -42,6 +44,28 @@ public class GameMechanicsHideAndSeek : MonoBehaviour
                 }
             }
         }
+
+        List<PlayerClientData> SortedPlayerClientData = new List<PlayerClientData>();
+        
+        foreach(PlayerClientData SeekerPlayerClientData in Seekers)
+        {
+            SortedPlayerClientData.Add(SeekerPlayerClientData);
+        }
+        foreach(PlayerClientData HiderPlayerClientData in Hiders)
+        {
+            SortedPlayerClientData.Add(HiderPlayerClientData);
+        }
+
+        SortedPlayerClientData = SortedPlayerClientData.OrderBy(x => x.GetSortingProperty()).ToList();
+
+        // Delete Later, for Debugging, specifically to ensure proper sorting of PlayerClientData Objects in list
+        foreach(PlayerClientData PlayerClientData_Object in SortedPlayerClientData)
+        {
+            Debug.Log(PlayerClientData_Object.GetSortingProperty());
+        }
+
+        return SortedPlayerClientData;
+
     }
 
 }

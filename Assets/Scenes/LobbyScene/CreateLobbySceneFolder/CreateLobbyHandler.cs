@@ -97,7 +97,7 @@ public class CreateLobbyHandler : MonoBehaviour
 
         GameObject PlayerHostTwo = GetHostPlayer();
         PlayerInstanceScript PlayerHostInstanceScriptTwo = PlayerHostTwo.GetComponent<PlayerInstanceScript>();
-        PlayerHostInstanceScriptTwo.RequestPlayerNamesToServerRpc(); // Explained to this point
+        PlayerHostInstanceScriptTwo.RequestPlayerNamesToServerRpc(); 
 
         IsConnected = true;
     }

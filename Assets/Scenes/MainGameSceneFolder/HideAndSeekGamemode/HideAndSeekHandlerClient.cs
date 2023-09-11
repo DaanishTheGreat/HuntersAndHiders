@@ -25,6 +25,8 @@ public class HideAndSeekHandlerClient : MonoBehaviour
     {
         PlayerLocationServiceObject = AllRequiredScriptsGameObject.GetComponent<PlayerLocationService_CommonComponent>();
         StartCoroutine(PlayerLocationServiceObject.GetUserLocationData());
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += ClientDisconnectedHandler;
     }
 
     // Update is called once per frame
@@ -196,4 +198,35 @@ public class HideAndSeekHandlerClient : MonoBehaviour
     }
 
     // InitializeAndDisplayPlayerClientsOnMap End Here
+
+    // Client Reconnection Handler
+
+    public void ClientDisconnectedHandler(ulong ClientId)
+    {
+        NetworkManager NetworkManagerObject = GetComponent<NetworkManager>();
+
+        if(NetworkManagerObject.ShutdownInProgress)
+        {
+            return;
+        }
+
+        StartCoroutine(Reconnect());
+    }
+
+    public IEnumerator Reconnect()
+    {
+        yield return new WaitForSeconds(3);
+
+        NetworkManager NetworkManagerObject = GetComponent<NetworkManager>();
+        if(NetworkManagerObject.IsConnectedClient)
+        {
+            StopCoroutine("Reconnect");
+        }
+
+        NetworkManagerObject.StartClient();
+
+
+    }
+
+    // End of Client Recconection Manager
 }

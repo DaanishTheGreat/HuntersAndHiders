@@ -113,4 +113,18 @@ public class PlayerInstanceScript : NetworkBehaviour
     // End of Server Client Get Request RPCs
 
     // End of Main Game Scenes Location Sync
+
+
+    // Start of Hide and Seek Specific RPCs
+    
+    [ServerRpc]
+    public void UpdatePlayerClientHiderOrSeekerStatusServerRpc()
+    {
+        GameMechanicsHideAndSeek GameMechanicsHideAndSeek_Object = new GameMechanicsHideAndSeek();
+
+        PlayerClientDataList = GameMechanicsHideAndSeek_Object.CheckDistanceOfPlayerClientsAndFlagAsSeekerIfCaught(PlayerClientDataList);
+    }
+
+    // End of Hide and Seek Specific RPCs
+    
 }

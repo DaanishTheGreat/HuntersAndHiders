@@ -8,6 +8,9 @@ public class PlayerClientData : INetworkSerializable
     private double Latitude_Normalized;
     private double Longitude_Normalized;
     private string PlayerClientName;
+
+    // PlayerInstanceScript Server keeps track of clients by the list's sorting order determined in lobby, therefore SortingProperty must be followed
+    // in the list to ensure proper PlayerClientData list syncing
     private int SortingProperty;
     
     // Hide and Seek Game Specific Variables
@@ -63,6 +66,8 @@ public class PlayerClientData : INetworkSerializable
         return IsSeeker;
     }
 
+
+    // _HideAndSeek methods are game specific to [Hide and Seek]
     public void SetSeekerStatus_HideAndSeek(bool IsSeeker_Input)
     {
         if(IsSeeker_Input == true)

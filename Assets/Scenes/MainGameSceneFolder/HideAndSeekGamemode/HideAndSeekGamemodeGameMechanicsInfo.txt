@@ -1,0 +1,70 @@
+High Level Rundown of HideAndSeekGamemode Game Mechanics 
+
+
+
+Game States {Game State}: 
+{Game State:PreGame} - x minute countdown for hider to go hide, seeker must stay in place
+
+{Game State:ActualGame} - x minutes for seeker to find hiders
+
+{Game State:EndGame} - <GameSummaryScene> loaded for all players
+
+
+
+Player States {Player State}:
+{Player State:Hider} - is Hider, unless Set otherwise
+
+{Player State:Seeker} - is Seeker, unless Set otherwise
+
+
+
+Methods: 
+EventAnnouncer(string) - Announces Event to all players about a new Game Development
+
+
+
+Other Variables: 
+{Main Boundary:True(For Duration of Game)} - global boundary in which all players must stay inside 
+
+{Seeker Boundary:[True/False]} - At start of game, seeker must stay inside of this boundary for duration of PreGame state
+
+{Hider Visibility:False} - Hider Visibility, if true, displays live location of specific Hider to all players, 
+Variable State Change from [true/false] to [false/true]: Invokes EventAnnouncer("Hider location [public/private] to all players")
+
+{Seeker Visibility:False} - Seeker Visibility, if true, displays live location of specific seeker to all players
+Variable State Change from [true/false] to [false/true]: Invokes EventAnnouncer("Seeker location [public/private] to all players")
+
+{Game Timer:x} - Game Timer for various events, x represents time left
+
+
+
+{Game State:PreGame} Chronological Rundown:
+(UI) Display Message for all Players stating: EventAnnouncer("You are a [Hider/Seeker] and have x minutes [to go hide/to wait in place] until game starts")
+(Game Progression) Set boundary for seeker to not be able to move {Seeker Boundary:True}, hiders may venture out but must remain inside {MainBoundary:True(For Duration of Game)}
+(Game Progression) SET {Game Timer:x}, Set timer for X minutes for Hiders to disperse and hide from seeker(s)
+(Game Progression) Once {Game Timer:0} reaches 0, then SET {Game State:ActualGame}
+
+(Game Mechanics) If Seeker is outside of {Seeker Boundary:True} and {Main Boundary:True(For Duration Of Game)} then SET {Seeker Visibility:True}
+(Game Mechanics) If Hider is outside of {Main Boundary:True(For Duration Of Game)} then SET {Hider Visibility:True}
+
+
+{Game State:ActualGame} Chronological Rundown:
+(UI) Display Message for all Players stating: EventAnnouncer("Game has started, Seeker is Loose!")
+(Game Progression) SET {Seeker Boundary:False} Seeker is free to find all hiders now
+(Game Progression) SET {Game Timer:x}, Set timer for x Minutes for Seeker to find the Hiders
+(Game Progression) Once {Game Timer:0} reaches 0, then SET {Game State:EndGame}
+
+(Game Mechanics) If a Seeker is x Distance from a Hider, SET {Player State:Seeker}
+(Game Mechanics) if [Seeker/Hider] is Outside of {Main Boundary} SET {[Seeker/Hider] Visibility:True} until [Seeker/Hider] is Inside of {Main Boundary} SET {[Seeker/Hider] Visibility:False}
+
+
+{Game State:EndGame} Chronological Rundown:
+(Game Progression) <GameSummaryScene> Loaded In for all Players
+
+
+
+(End of Game) Now Everyone Plays a New Game Again and Again and Again Forever for Eternity <3
+
+
+
+Note: Game Progression and Game Mechanics used interchangeably, just rely on Context
