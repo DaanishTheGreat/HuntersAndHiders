@@ -18,6 +18,20 @@ public class PlayerInstanceScript : NetworkBehaviour
 
     public int CurrentSortingProperty = 0;
 
+
+
+    // Start Hide and Seek Variables
+
+    // ((Reference HideAndSeekGamemodeGameMechanicsInfo.txt) Pregame=0: Game Setup and Timer for Hiders to disperse
+    // ActualGame = 1: Seeker Goes and Find Hiders
+    // EndGame = 2: Transfer all players to GameSummaryScene
+    private int GameState_HideAndSeekGamemode = 0; //(HOST/SERVER Only)
+
+    public static List<BoundariesData_HideAndSeek> BoundariesDataList_HideAndSeek = new List<BoundariesData_HideAndSeek>();
+
+    // End of Hide and Seek Variables 
+
+
     [ServerRpc]
     public void SendPlayerNameToServerRpc(string PlayerName = "Developer Instantiated Null")
     {
@@ -115,14 +129,26 @@ public class PlayerInstanceScript : NetworkBehaviour
     // End of Main Game Scenes Location Sync
 
 
-    // Start of Hide and Seek Specific RPCs
+    // Start of Hide and Seek Specific RPCs (Not Implemented Yet)
     
     [ServerRpc]
-    public void UpdatePlayerClientHiderOrSeekerStatusServerRpc()
+    public void HideAndSeekGamemode_UpdatePlayerClientHiderOrSeekerStatusServerRpc()
     {
         GameMechanicsHideAndSeek GameMechanicsHideAndSeek_Object = new GameMechanicsHideAndSeek();
 
         PlayerClientDataList = GameMechanicsHideAndSeek_Object.CheckDistanceOfPlayerClientsAndFlagAsSeekerIfCaught(PlayerClientDataList);
+    }
+
+    [ClientRpc]
+    public void HideAndSeekGamemode_AnnounceEventClientRpc()
+    {
+
+    }
+
+    [ServerRpc]
+    public void HideAndSeekGamemode_AddBoundaryServerRpc()
+    {
+        
     }
 
     // End of Hide and Seek Specific RPCs

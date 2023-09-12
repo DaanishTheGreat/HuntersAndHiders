@@ -2,7 +2,7 @@ High Level Rundown of HideAndSeekGamemode Game Mechanics
 
 
 
-Game States {Game State}: 
+Game States {Game State} - <PlayerInstanceScript>: 
 {Game State:PreGame} - x minute countdown for hider to go hide, seeker must stay in place
 
 {Game State:ActualGame} - x minutes for seeker to find hiders
@@ -11,7 +11,7 @@ Game States {Game State}:
 
 
 
-Player States {Player State}:
+Player States {Player State} - <PlayerClientData>:
 {Player State:Hider} - is Hider, unless Set otherwise
 
 {Player State:Seeker} - is Seeker, unless Set otherwise
@@ -23,22 +23,28 @@ EventAnnouncer(string) - Announces Event to all players about a new Game Develop
 
 
 
+Classes:
+<PlayerClientData> - Is the PlayerClient specific variables
+<PlayerInstanceScript> - Is the Server Handler, responsible for All Players
+
+
+
 Other Variables: 
-{Main Boundary:True(For Duration of Game)} - global boundary in which all players must stay inside 
+{Main Boundary:True(For Duration of Game)} - <PlayerInstanceScript> - global boundary in which all players must stay inside 
 
-{Seeker Boundary:[True/False]} - At start of game, seeker must stay inside of this boundary for duration of PreGame state
+{Seeker Boundary:[True/False]} - <PlayerInstanceScript> - At start of game, seeker must stay inside of this boundary for duration of PreGame state
 
-{Hider Visibility:False} - Hider Visibility, if true, displays live location of specific Hider to all players, 
+{Hider Visibility:False} - <PlayerClientData> - Hider Visibility, if true, displays live location of specific Hider to all players, 
 Variable State Change from [true/false] to [false/true]: Invokes EventAnnouncer("Hider location [public/private] to all players")
 
-{Seeker Visibility:False} - Seeker Visibility, if true, displays live location of specific seeker to all players
+{Seeker Visibility:False} - <PlayerClientData> - Seeker Visibility, if true, displays live location of specific seeker to all players
 Variable State Change from [true/false] to [false/true]: Invokes EventAnnouncer("Seeker location [public/private] to all players")
 
-{Game Timer:x} - Game Timer for various events, x represents time left
-
+{Game Timer:x} - <PlayerInstanceScript> - Game Timer for various events, x represents time left
 
 
 {Game State:PreGame} Chronological Rundown:
+(UI) Have Host Set Seekers and Hiders Manually
 (UI) Display Message for all Players stating: EventAnnouncer("You are a [Hider/Seeker] and have x minutes [to go hide/to wait in place] until game starts")
 (Game Progression) Set boundary for seeker to not be able to move {Seeker Boundary:True}, hiders may venture out but must remain inside {MainBoundary:True(For Duration of Game)}
 (Game Progression) SET {Game Timer:x}, Set timer for X minutes for Hiders to disperse and hide from seeker(s)

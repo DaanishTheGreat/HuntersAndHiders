@@ -14,7 +14,7 @@ public class PlayerClientData : INetworkSerializable
     private int SortingProperty;
     
     // Hide and Seek Game Specific Variables
-    private int IsSeeker = 0;
+    private int IsSeeker = 0; // if IsSeeker is 0 then Player is Hider
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
